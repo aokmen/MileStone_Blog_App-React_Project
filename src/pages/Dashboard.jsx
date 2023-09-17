@@ -16,7 +16,8 @@ const Dashboard = () => {
     },[])
   
     return (
-    <Box sx={{display:"flex", justifyContent:"center", gap:3, flexWrap:"wrap"}}>
+    <Box sx={{display:"flex", justifyContent:"center", gap:3, flexWrap:"wrap", marginTop:"5.5rem", marginBottom:"5rem"
+}}>
         {blogs?.map((item,i)=>(
 
             <Card {...item} key={i} />
