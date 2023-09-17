@@ -46,7 +46,7 @@ export default function RecipeReviewCard({author,title, category_name,comment_co
     <Card sx={{ maxWidth: 345, minWidth:200, boxShadow:"0 0 20px rgba(0, 0, 0, 0.2)"}}>  
          <CardMedia
         component="img"
-        height="150px"
+        height="120px"
         image={image}
         alt="Paella dish"
         sx={{ marginTop:"10px", objectFit: "contain" }}
