@@ -1,17 +1,13 @@
 import { Provider } from "react-redux";
 import store from "./app/store";
-import Dashboard from "./pages/Dashboard";
-
+import AppRouter from "./router/AppRouter";
+import  "./App.css"
 function App() {
   return (
     <>
       <Provider store={store}>
-        <div className="App">
-          <h1>
-            <Dashboard />
-          </h1>
-        </div>
-      </Provider>
+          <AppRouter/>
+       </Provider>
     </>
   );
 }

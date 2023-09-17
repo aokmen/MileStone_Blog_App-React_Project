@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.blogInput{
+    background-color: #fff; 
+    
+    border:6px solid white !important;
+    border-radius:5px !important;
+    margin:0.5rem 1.5rem !important;
+    width:350px;
+
+}
+.icon-btn:hover{
+   box-shadow: 0 0 20px white;
+   cursor: pointer;
+}
