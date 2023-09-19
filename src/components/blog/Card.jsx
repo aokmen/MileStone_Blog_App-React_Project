@@ -1,45 +1,29 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useSelector } from 'react-redux';
 import ChatIcon from '@mui/icons-material/Chat';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box, Button } from '@mui/material';
-
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
-
-export default function RecipeReviewCard({author,title, category_name,comment_count,content,image, likes, publish_date, post_views}) {
-  const [expanded, setExpanded] = React.useState(false);
+import { useNavigate } from 'react-router-dom';
 
 
+
+export default function RecipeReviewCard({author,title,id, category_name,comment_count,content,image, likes, publish_date, post_views}) {
+
+   const navigate = useNavigate()
+  //  const {id} = useParams()
   
  
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+ 
  let new_date = new Date(publish_date).toLocaleString()
   return (
     
@@ -57,7 +41,7 @@ export default function RecipeReviewCard({author,title, category_name,comment_co
            
             {(title.toUpperCase().charAt(0))}
          
-          </Avatar>
+          </Avatar> 
           
         }
        
@@ -65,7 +49,7 @@ export default function RecipeReviewCard({author,title, category_name,comment_co
         title={title}
         />  
         <CardContent>
-            <Typography variant="body2" color="text.secondary"  sx={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 3, overflow: 'hidden',   textOverflow: 'ellipsis'}}>
+            <Typography variant="body2" color="text.secondary"  sx={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden',   textOverflow: 'ellipsis'}}>
                 {content}
             </Typography>
         </CardContent>
@@ -84,9 +68,9 @@ export default function RecipeReviewCard({author,title, category_name,comment_co
         <IconButton aria-label="share">
           <VisibilityIcon />
         </IconButton>
-        
+        {/* (id)=>navigate(`/detail/${id}`) */}
       </CardActions>
-      <Button variant="contained" sx={{height:"35px",margin:"10px"}}>Read More</Button>
+      <Button variant="contained" sx={{height:"35px",margin:"10px"}} onClick={()=>navigate(`/detail/${id}`)}>Read More</Button>
       </Box>
     </Card>
   );

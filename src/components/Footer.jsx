@@ -33,7 +33,7 @@ export default function Footer() {
           }}>
 
        
-            <Typography variant="caption" color="white">Copyright ©{new Date().getFullYear()}   .Designed by aokmen </Typography> 
+            <Typography variant="caption" color="white">Copyright ©{new Date().getFullYear()} - Developed by aokmen </Typography> 
           
       </Box>
       </Container>

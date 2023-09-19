@@ -7,7 +7,7 @@ import { Box } from '@mui/material'
 const Dashboard = () => {
     const {blogs} = useSelector(state=>state.blog)
     
-    const getBlogData =useBlogCalls()
+    const {getBlogData} = useBlogCalls()
 
     useEffect(()=>{
          getBlogData("blogs")

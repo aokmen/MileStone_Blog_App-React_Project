@@ -14,14 +14,14 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import useAuthCalls from '../hooks/useAuthCalls';
 
-const pages = ['Dashboard', 'New Blog', 'About'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate()
+  const {logout} = useAuthCalls()
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -168,11 +168,23 @@ function Navbar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              
+                <MenuItem onClick={() => navigate("/my-blogs")}>
+                  <Typography textAlign="center">My Blogs</Typography>
                 </MenuItem>
-              ))}
+                <MenuItem onClick={() => navigate("/profile")}>
+                  <Typography textAlign="center">Profile</Typography>
+                </MenuItem>
+                <MenuItem onClick={() => navigate("/login")}>
+                  <Typography textAlign="center">Login</Typography>
+                </MenuItem>
+                <MenuItem onClick={() => navigate("/register")}>
+                  <Typography textAlign="center">Register</Typography>
+                </MenuItem>
+                <MenuItem >
+                  <Typography textAlign="center" onClick={logout} >Logout</Typography>
+                </MenuItem>
+              
             </Menu>
           </Box>
         </Toolbar>

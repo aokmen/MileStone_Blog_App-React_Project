@@ -3,63 +3,126 @@ import * as React from "react";
 
 import Typography from "@mui/material/Typography";
 
-import { Box, Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import { useSelector } from "react-redux";
+import useBlogCalls from "../hooks/useBlogCalls";
 
 
 export default function NewBlog() {
-    const [age, setAge] = React.useState('');
 
-    const handleChange = (event) => {
-      setAge(event.target.value);
+  const {blogs,categories} = useSelector(state=>state.blog)
+  const [info, setInfo] = React.useState({
+    title: "",
+    content: "",
+    image: "",
+    category: 2,
+    status: "p",
+  });
+    const {postBlogData,getBlogData,getCategory} = useBlogCalls()
+   
+
+    React.useEffect(()=>{
+         getBlogData("blogs")
+         getCategory("categories")
+        console.log("blogs",blogs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
+
+    const handleChange = (e) => {
+      
+      setInfo({...info,[e.target.name]:e.target.value});
+      console.log(info);
     };
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      postBlogData("blogs", info);
+     console.log(info);
+    }
   return (
     
-    <Box sx={{height:"570px",width:"400px",backgroundColor:"#061e36",borderRadius:"30px",margin:"100px auto"}}>
-        <Typography color="white" fontFamily="verdana" fontSize="1.5rem" padding="1rem">New Blog</Typography>
+    <Box sx={{height:"570px",width:"500px",backgroundColor:"#061e36",borderRadius:"30px",margin:"160px auto"}} component="form" onSubmit={handleSubmit}>
+        <Typography color="white" fontFamily="verdana" fontSize="1.5rem" padding="1rem" textAlign="center">New Blog</Typography>
        
-        <TextField className="blogInput" label="Title*" color="primary" required />
-
-        <TextField className="blogInput" label="Image URL*" color="primary" type="url" required />
-       
+        <TextField className="blogInput"
+              id="title"
+              name="title"
+              label="Title"
+              type="text"
+              value={info.title}
+              onChange={handleChange}
+              required
+            />
+        <TextField className="blogInput"
+              id="image"
+              name="image"
+              label="Image URL"
+              type="url"
+              value={info.image}
+              onChange={handleChange}
+              required
+            />
+        {/* <TextField className="blogInput"
+              id="category"
+              name="category"
+              label="category"
+              type="number"
+              value={info.category}
+              onChange={handleChange}
+              required
+            />
+        <TextField className="blogInput"
+              id="status"
+              name="status"
+              label="status"
+              type="text"
+              value={info.status}
+              onChange={handleChange}
+              required
+            /> */}
+               
         <FormControl className="blogInput" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-helper-label">Category</InputLabel>
+        <InputLabel id="demo-simple-select-label">Category</InputLabel>
         <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={age}
+          labelId="demo-simple-select-label"
+          id="category"
+          value= {info.category}
           label="Category"
           onChange={handleChange}
         >
-          <MenuItem value="">
-            <em>Please choose...</em>
-          </MenuItem>
-          <MenuItem value={10}>AI</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-        
+          {categories.map(item=>(
+            <MenuItem value={10} key={item.id}>{item.name
+            }</MenuItem>
+          ))}
+         </Select>
+     
       </FormControl>
       <FormControl className="blogInput" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-helper-label">Status</InputLabel>
+        <InputLabel id="demo-simple-select-label">Status</InputLabel>
         <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={age}
-          label="Status"
-          onChange={handleChange}
-        >
-          <MenuItem value="">
-            <em>Please choose...</em>
-          </MenuItem>
-          <MenuItem value={10}>Best</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+           labelId="demo-simple-select-label"
+           id="status"
+           name="status"
+           value={info.status}
+           label="Status"
+           onChange={handleChange}
+         >
+           {blogs.map(item=>(
+             <MenuItem value={10} key={item.id}>{item.status}</MenuItem>
+           ))}
         </Select>
-        
+    
       </FormControl>
-  
-        <TextField className="blogInput" label="Search field" color="primary" required />
-        <Box display="flex" justifyContent="center"><Button variant="contained">New Blog</Button></Box>
+
+      <TextField className="blogInput"
+              id="content"
+              name="content"
+              label="Content"
+              type="text"
+              value={info.content}
+              onChange={handleChange}
+              required
+            />
+        <Box display="flex" justifyContent="center" marginTop="1rem"><Button variant="contained" type="submit">New Blog</Button></Box>
         
        
 
