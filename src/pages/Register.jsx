@@ -1,69 +1,61 @@
 import React from 'react'
 import { Formik } from 'formik';
+import RegisterForm, { RegisterSchema } from '../components/auth/RegisterForm';
+import { Avatar, Box, Container, Grid, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+import useAuthCalls from '../hooks/useAuthCalls';
 
 const Register = () => {
+  const {register} = useAuthCalls()
   return (
+    <Container maxWidth="lg" sx={{marginTop:"8rem", border:"1px solid gray", width:"500px", padding:"2rem", borderRadius:"2rem", boxShadow:"0 0 20px #061e36"}}>
+     
+      
+
+        <Grid item xs={12} sm={10} md={6}>
+          <Avatar
+            sx={{
+              backgroundColor: "primary",
+              m: "auto",
+              width: 40,
+              height: 40,
+            }}>
+           
+          </Avatar>
+          <Typography
+            variant="h5"
+            align="center"
+            mb={2}
+            color="info.dark">
+            Register
+          </Typography>
     <Formik
        initialValues={{
-        username: "string",
-        first_name: "string",
-        last_name: "string",
-        email: "user@example.com",
-        image: "http://example.com",
-        bio: "string",
-        password: "string",
-        password2: "string",}}
-       validate={values => {
-         const errors = {};
-         if (!values.email) {
-           errors.email = 'Required';
-         } else if (
-           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-         ) {
-           errors.email = 'Invalid email address';
-         }
-         return errors;
-       }}
-       onSubmit={(values, { setSubmitting }) => {
-         setTimeout(() => {
-           alert(JSON.stringify(values, null, 2));
-           setSubmitting(false);
-         }, 400);
-       }}
-     >
-       {({
-         values,
-         errors,
-         touched,
-         handleChange,
-         handleBlur,
-         handleSubmit,
-         isSubmitting,
-         /* and other goodies */
-       }) => (
-         <form onSubmit={handleSubmit}>
-           <input
-             type="email"
-             name="email"
-             onChange={handleChange}
-             onBlur={handleBlur}
-             value={values.email}
-           />
-           {errors.email && touched.email && errors.email}
-           <input
-             type="password"
-             name="password"
-             onChange={handleChange}
-             onBlur={handleBlur}
-             value={values.password}
-           />
-           {errors.password && touched.password && errors.password}
-           <button type="submit" disabled={isSubmitting}>
-             Submit
-           </button>
-         </form>
-       )}
+        username: "",
+        first_name: "",
+        last_name: "",
+        email: "",
+        image: "",
+        bio: "",
+        password: "",
+        password2: "",}}
+       validationSchema={RegisterSchema}
+       onSubmit={(values, actions) => {
+         register(values);
+         actions.resetForm();
+         actions.setSubmitting(false)
+       }}component={props => <RegisterForm {...props} />}>
      </Formik>
+     <Box sx={{ textAlign: "center", mt: 2 }}>
+            <Link to="/login">Already have an account? Sign in</Link>
+          </Box>
+        </Grid>
+
+        <Grid item xs={0} sm={7} md={6}>
+       
+        </Grid>
+     
+    </Container>
   )
 }
 

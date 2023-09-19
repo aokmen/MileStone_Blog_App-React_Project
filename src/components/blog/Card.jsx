@@ -43,10 +43,10 @@ export default function RecipeReviewCard({author,title, category_name,comment_co
  let new_date = new Date(publish_date).toLocaleString()
   return (
     
-    <Card sx={{ maxWidth: 345, minWidth:200, boxShadow:"0 0 20px rgba(0, 0, 0, 0.2)"}}>  
+    <Card sx={{ maxWidth: 345, minWidth:200, boxShadow:"0 0 20px rgba(0, 0, 0, 0.2)", borderRadius:"20px", padding:"0.3rem"}}>  
          <CardMedia
         component="img"
-        height="120px"
+        height="100px"
         image={image}
         alt="Paella dish"
         sx={{ marginTop:"10px", objectFit: "contain" }}
