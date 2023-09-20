@@ -1,8 +1,9 @@
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField,FormControl, IconButton, InputAdornment, } from '@mui/material';
 import { Form } from 'formik';
 import React from 'react'
 import { object, string, ref } from "yup";
-
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 export const RegisterSchema = object({
     username: string()
       .max(10, "Username must be less than 10 characters!")
@@ -35,7 +36,13 @@ const RegisterForm = ({
     handleBlur,
     isSubmitting,
 }) => {
-          
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };  
     return (
     <div>
         <Form>
@@ -115,7 +122,65 @@ const RegisterForm = ({
                 error={touched.bio && Boolean(errors.bio)}
                 />
              <Box display="flex"  gap="5px">
+             <FormControl variant="outlined">
               <TextField
+                htmlFor="outlined-adornment-password"
+                label="Password*"
+                name="password"
+                id="password"
+                type={showPassword ? "text" : "password"}
+                variant="outlined"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperText={touched.password && errors.password}
+                error={touched.password && Boolean(errors.password)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </FormControl>
+            <FormControl variant="outlined">
+              <TextField
+                htmlFor="outlined-adornment-password"
+                label="Confirm Password*"
+                name="password2"
+                id="password2"
+                type={showPassword ? "text" : "password"}
+                variant="outlined"
+                value={values.password2}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperText={touched.password2 && errors.password2}
+                error={touched.password2 && Boolean(errors.password2)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </FormControl>
+              {/* <TextField
                 label="Password*"
                 name="password"
                 id="password"
@@ -138,7 +203,7 @@ const RegisterForm = ({
                 onBlur={handleBlur}
                 helperText={touched.password2 && errors.password2}
                 error={touched.password2 && Boolean(errors.password2)}
-                />
+                /> */}
             </Box>
             <Button
                 type="submit"

@@ -1,7 +1,9 @@
-import { Box, Button, TextField } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import { Box, Button, FormControl, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Form } from 'formik';
 import React from 'react'
 import { object, string} from "yup";
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 export const LoginSchema = object({
     email: string().email().required("Email is a required field!"),
@@ -23,7 +25,13 @@ const LoginForm = ({
     handleBlur,
     isSubmitting,
 }) => {
-          
+  const [showPassword, setShowPassword] = React.useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
     return (
     <div>
         <Form>
@@ -42,18 +50,35 @@ const LoginForm = ({
                 error={touched.email && Boolean(errors.email)}
                 />
               
+            <FormControl variant="outlined">
               <TextField
+                htmlFor="outlined-adornment-password"
                 label="Password*"
                 name="password"
                 id="password"
-                type="password"
-                variant="outlined" 
-                value={values.password}               
+                type={showPassword ? "text" : "password"}
+                variant="outlined"
+                value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
                 helperText={touched.password && errors.password}
                 error={touched.password && Boolean(errors.password)}
-                />
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </FormControl>
                <Button 
                 type="submit"
                 variant="contained"
