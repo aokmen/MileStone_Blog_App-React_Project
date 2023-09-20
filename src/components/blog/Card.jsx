@@ -12,15 +12,25 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatIcon from '@mui/icons-material/Chat';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { getLikeSuccess } from '../../features/blogSlice';
+import useBlogCalls from '../../hooks/useBlogCalls';
 
 
 
-export default function RecipeReviewCard({author,title,id, category_name,comment_count,content,image, likes, publish_date, post_views}) {
-
+export default function RecipeReviewCard({author,title,id,likes,category_name,comment_count,content,image, publish_date, post_views}) {
+  const {postLike,getLike} = useBlogCalls()
    const navigate = useNavigate()
-  //  const {id} = useParams()
+    // const {id} = useParams()
+    // const {likes} = useSelector(state=>state.blog)
+ 
+const handleFavorite = () => {
   
+  postLike(id)
+    console.log("likes:",likes);
+   console.log("id:",id);
+}
  
 
  
@@ -59,8 +69,9 @@ export default function RecipeReviewCard({author,title,id, category_name,comment
       
      <Box sx={{display:"flex", justifyContent:"space-between"}}>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={()=>handleFavorite()}>
           <FavoriteIcon />
+          {likes}
         </IconButton>
         <IconButton aria-label="share">
           <ChatIcon />
@@ -70,7 +81,7 @@ export default function RecipeReviewCard({author,title,id, category_name,comment
         </IconButton>
         {/* (id)=>navigate(`/detail/${id}`) */}
       </CardActions>
-      <Button variant="contained" sx={{height:"35px",margin:"10px"}} onClick={()=>navigate(`/detail/${id}`)}>Read More</Button>
+      <Button variant="contained" sx={{height:"35px",margin:"10px"}} onClick={()=>navigate(`/detail/${id}/`)}>Read More</Button>
       </Box>
     </Card>
   );
