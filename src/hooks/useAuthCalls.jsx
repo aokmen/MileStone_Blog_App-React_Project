@@ -36,7 +36,7 @@ const useAuthCalls = () => {
             const {data} = await axios.post(`${BASE_URL}users/auth/login/`,userInfo)
             dispatch(loginSuccess(data));
             toastSuccessNotify("Login successful")
-            navigate(`${state.from}`)
+            navigate(-1)
         
         } catch (error) {
             dispatch(fetchFail());

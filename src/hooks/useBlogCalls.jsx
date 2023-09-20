@@ -1,6 +1,6 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { fetchFail, fetchStart, getCategorySuccess, getSuccess } from '../features/blogSlice';
+import { fetchFail, fetchStart, getCategorySuccess, getLikeSuccess, getSuccess } from '../features/blogSlice';
 import axios from "axios"
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
@@ -58,8 +58,54 @@ const useBlogCalls = () => {
     console.log(data);
  }
 
+  
+
+    /* -------------------------------------------------------------------------- */
+    /*                                   getLike                                  */
+    /* -------------------------------------------------------------------------- */
+    const getLike = async(id) => {
+        const {data} = await axios(`${BASE_URL}api/likes/${id}/`)
+        dispatch(getLikeSuccess({data}))
+        console.log("getLike:",data);
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                  postLike                                  */
+    /* -------------------------------------------------------------------------- */
+
+//    const postLike = async(id) => {
+//     const { data } = await axios.post(`${BASE_URL}api/likes/${id}/`,null,
+//     {
+//           headers: {
+//             Authorization: `Token ${token}`,
+//           },
+//         }
+//     )
+//     dispatch(getLikeSuccess({data}))
+//     console.log("postLike:",data);
+//  }
+
+ const postLike = async(id) => {
+    dispatch(fetchStart())
+    try {
+       
+         await axios.post(`${BASE_URL}api/likes/${id}/`,null,
+        {
+              headers: {
+                Authorization: `Token ${token}`,
+              },
+            }
+        )
+        getBlogData("blogs")
+         toastSuccessNotify("successfuly created!");
+    } catch (error) {
+        dispatch(fetchFail())
+        toastErrorNotify("Likes failed!")
+    }
+ }
+
   return {
-    getBlogData,postBlogData,getCategory
+    getBlogData,postBlogData,getCategory,getLike,postLike
   }
 }
 
