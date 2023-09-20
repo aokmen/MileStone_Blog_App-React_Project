@@ -15,7 +15,7 @@ export default function NewBlog() {
     title: "",
     content: "",
     image: "",
-    category: 2,
+    category: "",
     status: "p",
   });
     const {postBlogData,getBlogData,getCategory} = useBlogCalls()
@@ -80,7 +80,7 @@ export default function NewBlog() {
               required
             /> */}
                
-        <FormControl className="blogInput" sx={{ m: 1, minWidth: 120 }}>
+        {/* <FormControl className="blogInput" sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="demo-simple-select-label">Category</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -90,12 +90,30 @@ export default function NewBlog() {
           onChange={handleChange}
         >
           {categories.map(item=>(
-            <MenuItem value={10} key={item.id}>{item.name
+            <MenuItem key={item.id}>{item.name
             }</MenuItem>
           ))}
          </Select>
      
-      </FormControl>
+      </FormControl> */}
+         <TextField
+         className="blogInput"
+          id="outlined-select-currency"
+          select
+          label="Category"
+          name = "category"
+          value = {info.category}
+          defaultValue="Category"
+          helperText="Please select your currency"
+          onChange={handleChange}
+        >
+          
+          {categories.map((item) => (
+            <MenuItem key={item.id} value={item.id}>
+              {item.name}
+            </MenuItem>
+          ))}
+        </TextField>
       <FormControl className="blogInput" sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="demo-simple-select-label">Status</InputLabel>
         <Select
@@ -106,9 +124,10 @@ export default function NewBlog() {
            label="Status"
            onChange={handleChange}
          >
-           {blogs.map(item=>(
-             <MenuItem value={10} key={item.id}>{item.status}</MenuItem>
-           ))}
+   
+             <MenuItem value="d">Draft</MenuItem>
+             <MenuItem value="p">Published</MenuItem>
+          
         </Select>
     
       </FormControl>
