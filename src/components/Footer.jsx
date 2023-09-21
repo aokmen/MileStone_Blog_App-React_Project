@@ -9,16 +9,9 @@ export default function Footer() {
    
   return (
 
-    <Paper  sx={{ bottom: 0, backgroundColor:"#061e36",
-    
-    width:"100%", position: "fixed",
-  
-   
-    height: "60px"  }} component="footer" square variant="contained">
+    <Paper  sx={{ bottom: 0, backgroundColor:"#061e36",width:"100%", position: "fixed", height: "60px",zIndex:"20" }} component="footer" square variant="contained">
       <Container maxWidth="lg" >
-    
-         
-        <Box
+            <Box
             sx={{
             flexGrow: 1,
             justifyContent: "center",
@@ -26,13 +19,9 @@ export default function Footer() {
             flexDirection:"column",
             textAlign:"center",
             height:"4rem",
-           
-           
-  /* Height of the footer */
-
+            
           }}>
 
-       
             <Typography variant="caption" color="white">Copyright ©{new Date().getFullYear()} - Developed by aokmen </Typography> 
           
       </Box>

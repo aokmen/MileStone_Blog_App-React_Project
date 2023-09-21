@@ -12,29 +12,28 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ChatIcon from '@mui/icons-material/Chat';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box, Button } from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { getLikeSuccess } from '../../features/blogSlice';
+import { useNavigate } from 'react-router-dom';
+
 import useBlogCalls from '../../hooks/useBlogCalls';
+import { useSelector } from 'react-redux';
 
 
 
-export default function RecipeReviewCard({author,title,id,likes,category_name,comment_count,content,image, publish_date, post_views}) {
-  const {postLike,getLike} = useBlogCalls()
+export default function RecipeReviewCard({author,title,id,likes,category_name,comment_count,content,image, publish_date, post_views,likes_n}) {
+  const {userId} = useSelector(state=>state.auth)
+  const {postLike} = useBlogCalls()
    const navigate = useNavigate()
-    // const {id} = useParams()
-    // const {likes} = useSelector(state=>state.blog)
+    
+const handleFavorite = () => { postLike(id);}
+const handleDetailClick = () => {
  
-const handleFavorite = () => {
-  
-  postLike(id)
-    console.log("likes:",likes);
-   console.log("id:",id);
-}
- 
+   navigate(`/detail/${id}/`)
+} 
 
- 
+
  let new_date = new Date(publish_date).toLocaleString()
+
+
   return (
     
     <Card sx={{ maxWidth: 345, minWidth:200, boxShadow:"0 0 20px rgba(0, 0, 0, 0.2)", borderRadius:"20px", padding:"0.3rem"}}>  
@@ -42,7 +41,7 @@ const handleFavorite = () => {
         component="img"
         height="100px"
         image={image}
-        alt="Paella dish"
+        alt={title}
         sx={{ marginTop:"10px", objectFit: "contain" }}
       />
       <CardHeader
@@ -57,6 +56,7 @@ const handleFavorite = () => {
        
         titleTypographyProps={{variant:'h5' }}
         title={title}
+        sx={{maxHeight:"5rem", overflow:"hidden"}}
         />  
         <CardContent>
             <Typography variant="body2" color="text.secondary"  sx={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2, overflow: 'hidden',   textOverflow: 'ellipsis'}}>
@@ -69,19 +69,21 @@ const handleFavorite = () => {
       
      <Box sx={{display:"flex", justifyContent:"space-between"}}>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={()=>handleFavorite()}>
-          <FavoriteIcon />
+        <IconButton aria-label="add to favorites" onClick={handleFavorite}>
+          {likes_n.some((item) => item.user_id === userId) ? (
+            <FavoriteIcon color="error" /> ) : (<FavoriteIcon />)}
           {likes}
         </IconButton>
         <IconButton aria-label="share">
-          <ChatIcon />
+          <ChatIcon /> {comment_count}
         </IconButton>
         <IconButton aria-label="share">
           <VisibilityIcon />
+          {post_views}
         </IconButton>
         {/* (id)=>navigate(`/detail/${id}`) */}
       </CardActions>
-      <Button variant="contained" sx={{height:"35px",margin:"10px"}} onClick={()=>navigate(`/detail/${id}/`)}>Read More</Button>
+      <Button variant="contained" sx={{height:"35px",margin:"10px",backgroundColor:"gray"}} onClick={handleDetailClick}>Read More</Button>
       </Box>
     </Card>
   );
