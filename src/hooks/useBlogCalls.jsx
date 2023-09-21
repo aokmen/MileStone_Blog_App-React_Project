@@ -1,6 +1,6 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { fetchFail, fetchStart, getCategorySuccess, getLikeSuccess, getSuccess } from '../features/blogSlice';
+import { fetchFail, fetchStart, getCategorySuccess, getSuccess,getDetailSuccess, getCommentSuccess } from '../features/blogSlice';
 import axios from "axios"
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
@@ -61,29 +61,8 @@ const useBlogCalls = () => {
   
 
     /* -------------------------------------------------------------------------- */
-    /*                                   getLike                                  */
-    /* -------------------------------------------------------------------------- */
-    const getLike = async(id) => {
-        const {data} = await axios(`${BASE_URL}api/likes/${id}/`)
-        dispatch(getLikeSuccess({data}))
-        console.log("getLike:",data);
-    }
-
-    /* -------------------------------------------------------------------------- */
     /*                                  postLike                                  */
     /* -------------------------------------------------------------------------- */
-
-//    const postLike = async(id) => {
-//     const { data } = await axios.post(`${BASE_URL}api/likes/${id}/`,null,
-//     {
-//           headers: {
-//             Authorization: `Token ${token}`,
-//           },
-//         }
-//     )
-//     dispatch(getLikeSuccess({data}))
-//     console.log("postLike:",data);
-//  }
 
  const postLike = async(id) => {
     dispatch(fetchStart())
@@ -97,15 +76,66 @@ const useBlogCalls = () => {
             }
         )
         getBlogData("blogs")
-         toastSuccessNotify("successfuly created!");
+       
     } catch (error) {
         dispatch(fetchFail())
-        toastErrorNotify("Likes failed!")
     }
  }
 
+    /* -------------------------------------------------------------------------- */
+    /*                                  getDetail                                 */
+    /* -------------------------------------------------------------------------- */
+    
+   const getDetail = async(id) => {
+   
+
+    const { data } = await axios(`${BASE_URL}api/blogs/${id}/`,
+    {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+    )
+    dispatch(getDetailSuccess(data))
+       
+ }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                 getComment                                 */
+    /* -------------------------------------------------------------------------- */
+
+    const getComment = async(id) => {
+   
+        const { data } = await axios(`${BASE_URL}api/comments/${id}/`)
+        dispatch(getCommentSuccess(data))
+     }
+
+    /* -------------------------------------------------------------------------- */
+    /*                                 postComment                                */
+    /* -------------------------------------------------------------------------- */
+
+    const postComment = async(id,info) => {
+             dispatch(fetchStart())
+            try {
+                await axios.post(`${BASE_URL}api/likes/${id}/`,info,
+                    {
+                        headers: {
+                            Authorization: `Token ${token}`,
+                        },
+                        }
+                    )
+                    toastSuccessNotify("Comment created!");    
+                    getComment(id)
+            } catch (error) {
+                dispatch(fetchFail())
+                toastErrorNotify("Comment failed!")
+            }
+                    
+           
+     }
+
   return {
-    getBlogData,postBlogData,getCategory,getLike,postLike
+    getBlogData,postBlogData,getCategory,postLike,getDetail,getComment,postComment
   }
 }
 

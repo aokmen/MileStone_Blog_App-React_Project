@@ -141,7 +141,7 @@ export default function NewBlog() {
               onChange={handleChange}
               required
             />
-        <Box display="flex" justifyContent="center" marginTop="1rem"><Button variant="contained" type="submit">New Blog</Button></Box>
+        <Box display="flex" justifyContent="center" margin="0.5rem"><Button variant="contained" type="submit">New Blog</Button></Box>
         
        
 
