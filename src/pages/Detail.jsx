@@ -14,6 +14,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box } from '@mui/material';
 import { useParams } from 'react-router-dom';
+<<<<<<< HEAD
 import useBlogCalls from '../hooks/useBlogCalls';
 import CommentCard from '../components/blog/CommentCard';
 import CommentForm from '../components/blog/CommentForm';
@@ -43,7 +44,20 @@ const Detail = () => {
 
  const handleFavorite = () => { postLike(id); getDetail(id); }
 
+=======
 
+const Detail = () => {
+  const { id } = useParams();
+  const { blogs } = useSelector((state) => state.blog);
+>>>>>>> f53a9e8d3a134a11328a3bae7b8561eea85d52b3
+
+  // blogs dizisi içinde id'ye sahip bir öğe var mı kontrol et
+  if (!blogs || id <= 0 || id > blogs.length) {
+    return <div>Böyle bir blog bulunamadı.</div>;
+  }
+
+  const { author, title, category_name, comment_count, content, image, likes, publish_date, post_views } = blogs[id - 1];
+  let new_date = new Date(publish_date).toLocaleString();
 
   return (
     <Card sx={{ maxWidth: 545, minWidth: 200, boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)", borderRadius: "20px", padding: "0.3rem", margin: "10rem auto", }}>
@@ -65,7 +79,11 @@ const Detail = () => {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} >
+<<<<<<< HEAD
             {(title?.toUpperCase().charAt(0))}
+=======
+            {(title.toUpperCase().charAt(0))}
+>>>>>>> f53a9e8d3a134a11328a3bae7b8561eea85d52b3
           </Avatar>
         }
         titleTypographyProps={{ variant: 'h5' }}
@@ -78,6 +96,7 @@ const Detail = () => {
       </CardContent>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <CardActions disableSpacing>
+<<<<<<< HEAD
           <IconButton aria-label="add to favorites"  onClick={handleFavorite}>
           {likes_n?.some((item) => item.user_id === userId) ? (
             <FavoriteIcon color="error" /> ) : (<FavoriteIcon />)}
@@ -89,6 +108,16 @@ const Detail = () => {
           <IconButton aria-label="share">
             <VisibilityIcon />
             {post_views}
+=======
+          <IconButton aria-label="add to favorites">
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="share">
+            <ChatIcon />
+          </IconButton>
+          <IconButton aria-label="share">
+            <VisibilityIcon />
+>>>>>>> f53a9e8d3a134a11328a3bae7b8561eea85d52b3
           </IconButton>
         </CardActions>
       </Box>
