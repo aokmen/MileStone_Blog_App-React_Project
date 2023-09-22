@@ -1,41 +1,11 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ChatIcon from '@mui/icons-material/Chat';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Box, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-
-import useBlogCalls from '../../hooks/useBlogCalls';
-import { useSelector } from 'react-redux';
-import CommentForm from './CommentForm';
-
+import { Box } from '@mui/material';
 
 
 export default function CommentCard({ id,content,post,time_stamp,user}) {
-
-
-
-  const {userId} = useSelector(state=>state.auth)
-  const { details,comments} = useSelector((state) => state.blog);
-   const navigate = useNavigate()
-   const {getComment} = useBlogCalls()
-
-
-const handleDetailClick = () => {
- 
-//    navigate(`/detail/${id}/`)
-} 
-
-
 
  let new_date = new Date(time_stamp).toLocaleString()
 

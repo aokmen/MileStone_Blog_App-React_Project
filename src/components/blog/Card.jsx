@@ -21,9 +21,10 @@ import { useSelector } from 'react-redux';
 
 export default function RecipeReviewCard({author,title,id,likes,category_name,comment_count,content,image, publish_date, post_views,likes_n}) {
   const {userId} = useSelector(state=>state.auth)
-  const {postLike} = useBlogCalls()
+  const {getDetail,postLike} = useBlogCalls()
    const navigate = useNavigate()
-    
+
+ 
 const handleFavorite = () => { postLike(id);}
 const handleDetailClick = () => {
  
