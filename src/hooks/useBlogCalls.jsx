@@ -1,14 +1,17 @@
 import React from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { fetchFail, fetchStart, getCategorySuccess, getSuccess,getDetailSuccess, getCommentSuccess } from '../features/blogSlice';
+import { fetchFail, fetchStart, getCategorySuccess, getSuccess,getDetailSuccess, getCommentSuccess, getUserSuccess } from '../features/blogSlice';
 import axios from "axios"
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
+import { useNavigate } from 'react-router-dom';
 
 const useBlogCalls = () => {
 
      const dispatch = useDispatch()
+     const navigate = useNavigate()
      const BASE_URL = process.env.REACT_APP_BASE_URL;
      const {token} = useSelector(state=>state.auth)
+     const {userId} = useSelector(state=>state.auth)
      /* -------------------------------------------------------------------------- */
      /*                                 getBlogData                                */
      /* -------------------------------------------------------------------------- */
@@ -49,6 +52,30 @@ const useBlogCalls = () => {
    }
 
    /* -------------------------------------------------------------------------- */
+   /*                               deleteBlogData                               */
+   /* -------------------------------------------------------------------------- */
+
+   const deleteBlogData = async(id) => {
+      dispatch(fetchStart());
+    try {
+       await axios.delete(`${BASE_URL}api/blogs/${id}/`,
+       {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      )
+      navigate(-1)
+      toastSuccessNotify(`Blog successfuly deleted!`);
+    } catch (error) {
+      dispatch(fetchFail());
+      toastErrorNotify(`Blog not deleted successfully!`);
+    }
+           
+ }
+
+
+   /* -------------------------------------------------------------------------- */
    /*                                 getCategory                                */
    /* -------------------------------------------------------------------------- */
 
@@ -64,7 +91,7 @@ const useBlogCalls = () => {
     /*                                  postLike                                  */
     /* -------------------------------------------------------------------------- */
 
- const postLike = async(id) => {
+ const postLike = async(id,detail=false) => {
     dispatch(fetchStart())
     try {
        
@@ -75,7 +102,8 @@ const useBlogCalls = () => {
               },
             }
         )
-        getBlogData("blogs")
+        if(detail){getDetail(id)}
+        else getBlogData("blogs")
        
     } catch (error) {
         dispatch(fetchFail())
@@ -99,16 +127,23 @@ const useBlogCalls = () => {
     dispatch(getDetailSuccess(data))
        
  }
-
     /* -------------------------------------------------------------------------- */
-    /*                                 getComment                                 */
+    /*                                   getUser                                  */
     /* -------------------------------------------------------------------------- */
-
-    const getComment = async(id) => {
+    
+    const getUser = async(userId) => {
    
-        const { data } = await axios(`${BASE_URL}api/comments/${id}/`)
-        dispatch(getCommentSuccess(data))
-     }
+
+      const { data } = await axios(`${BASE_URL}api/blogs?author=${userId}`,
+      {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+      )
+      dispatch(getUserSuccess(data))
+         
+   }
 
     /* -------------------------------------------------------------------------- */
     /*                                 postComment                                */
@@ -117,7 +152,7 @@ const useBlogCalls = () => {
     const postComment = async(id,info) => {
              dispatch(fetchStart())
             try {
-                await axios.post(`${BASE_URL}api/likes/${id}/`,info,
+                await axios.post(`${BASE_URL}api/comments/${id}/`,info,
                     {
                         headers: {
                             Authorization: `Token ${token}`,
@@ -125,7 +160,7 @@ const useBlogCalls = () => {
                         }
                     )
                     toastSuccessNotify("Comment created!");    
-                    getComment(id)
+                    getDetail(id)
             } catch (error) {
                 dispatch(fetchFail())
                 toastErrorNotify("Comment failed!")
@@ -135,7 +170,7 @@ const useBlogCalls = () => {
      }
 
   return {
-    getBlogData,postBlogData,getCategory,postLike,getDetail,getComment,postComment
+    getBlogData,postBlogData,getCategory,postLike,getDetail,getUser,postComment,deleteBlogData
   }
 }
 
