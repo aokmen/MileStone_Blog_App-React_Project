@@ -104,14 +104,10 @@ export default function NewBlog() {
           name = "category"
           value = {info.category}
           defaultValue="Category"
-          helperText="Please select your currency"
+          helperText="Please select your category"
           onChange={handleChange}
         >
-<<<<<<< HEAD
           
-=======
-          <MenuItem value={0}> please choose...</MenuItem>
->>>>>>> f53a9e8d3a134a11328a3bae7b8561eea85d52b3
           {categories.map((item) => (
             <MenuItem key={item.id} value={item.id}>
               {item.name}

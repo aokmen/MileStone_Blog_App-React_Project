@@ -12,52 +12,41 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useSelector } from 'react-redux';
 import ChatIcon from '@mui/icons-material/Chat';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
-<<<<<<< HEAD
 import useBlogCalls from '../hooks/useBlogCalls';
 import CommentCard from '../components/blog/CommentCard';
 import CommentForm from '../components/blog/CommentForm';
 
 const Detail = () => {
     const { id } = useParams();
-  const { details,comments} = useSelector((state) => state.blog);
+  const { details} = useSelector((state) => state.blog);
   const {userId} = useSelector(state=>state.auth)
-  const {getDetail,postLike,getComment} = useBlogCalls()
+  const {getDetail,postLike} = useBlogCalls()
   const [show, setShow] = React.useState(false)
   // blogs dizisi içinde id'ye sahip bir öğe var mı kontrol et
   // if (!blogs || id <= 0 || id > blogs.length) {
   //   return <div>Böyle bir blog bulunamadı.</div>;
   // }
 
-  const { author, title, category_name, comment_count, content, image, likes, publish_date, post_views,likes_n } = details
+  const { author, title, category_name, comment_count, content, image, likes, publish_date, post_views,likes_n,comments } = details
+  const {username} = useSelector(state=>state.auth)
   let new_date = new Date(publish_date).toLocaleString();
-
+  const {deleteBlogData} = useBlogCalls()
   React.useEffect(() => {
     getDetail(id)
-
-      getComment(id)
-      console.log("comments",comments);
-
   }, [])
 
 
- const handleFavorite = () => { postLike(id); getDetail(id); }
+ const handleFavorite = () => { postLike(id,true)
+//   .then(() => {
+//   getDetail(id);
+//  }) 
 
-=======
-
-const Detail = () => {
-  const { id } = useParams();
-  const { blogs } = useSelector((state) => state.blog);
->>>>>>> f53a9e8d3a134a11328a3bae7b8561eea85d52b3
-
-  // blogs dizisi içinde id'ye sahip bir öğe var mı kontrol et
-  if (!blogs || id <= 0 || id > blogs.length) {
-    return <div>Böyle bir blog bulunamadı.</div>;
-  }
-
-  const { author, title, category_name, comment_count, content, image, likes, publish_date, post_views } = blogs[id - 1];
-  let new_date = new Date(publish_date).toLocaleString();
+}
+const handleDeleteClick = () => {
+  deleteBlogData(id)
+}
 
   return (
     <Card sx={{ maxWidth: 545, minWidth: 200, boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)", borderRadius: "20px", padding: "0.3rem", margin: "10rem auto", }}>
@@ -79,11 +68,7 @@ const Detail = () => {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} >
-<<<<<<< HEAD
             {(title?.toUpperCase().charAt(0))}
-=======
-            {(title.toUpperCase().charAt(0))}
->>>>>>> f53a9e8d3a134a11328a3bae7b8561eea85d52b3
           </Avatar>
         }
         titleTypographyProps={{ variant: 'h5' }}
@@ -94,9 +79,8 @@ const Detail = () => {
           {content}
         </Typography>
       </CardContent>
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box sx={{ display: "flex"}}>
         <CardActions disableSpacing>
-<<<<<<< HEAD
           <IconButton aria-label="add to favorites"  onClick={handleFavorite}>
           {likes_n?.some((item) => item.user_id === userId) ? (
             <FavoriteIcon color="error" /> ) : (<FavoriteIcon />)}
@@ -108,21 +92,22 @@ const Detail = () => {
           <IconButton aria-label="share">
             <VisibilityIcon />
             {post_views}
-=======
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <ChatIcon />
-          </IconButton>
-          <IconButton aria-label="share">
-            <VisibilityIcon />
->>>>>>> f53a9e8d3a134a11328a3bae7b8561eea85d52b3
           </IconButton>
         </CardActions>
+        {author === username && 
+        <Box marginLeft="9rem"  marginTop="0.5rem" > 
+        <Button variant="contained"  sx={{marginRight:"1rem", backgroundColor:"gray"}}>Update</Button> 
+        <Button variant="contained" color="error" marginLeft="1rem" onClick={()=>handleDeleteClick()}>Delete</Button> 
+        </Box>
+        }
       </Box>
-     {show && comments.map(item=>(<CommentCard {...item}/>))}
-     {show && (<CommentForm/>)}
+     {show && 
+     <>
+      {comments?.map(item=>(<CommentCard key={item.id} {...item}/>))}
+      <CommentForm/>
+     </>
+     }
+    
     </Card>
   );
 }
