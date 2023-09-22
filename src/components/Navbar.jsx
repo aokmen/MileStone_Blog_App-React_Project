@@ -15,11 +15,14 @@ import AdbIcon from '@mui/icons-material/Adb';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import useAuthCalls from '../hooks/useAuthCalls';
+import { useSelector } from 'react-redux';
 
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+ const {currentUser} = useSelector(state=>state.auth)
+
   const navigate = useNavigate()
   const {logout} = useAuthCalls()
   const handleOpenNavMenu = (event) => {
@@ -44,6 +47,9 @@ function Navbar() {
       },
     },
   });
+
+  console.log("navbar",currentUser);
+
   return (
     <ThemeProvider theme={darkTheme}>
     <AppBar position="fixed" >
@@ -167,24 +173,21 @@ function Navbar() {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
-            >
-              
-                <MenuItem onClick={() => navigate("/my-blogs")}>
+            > {currentUser ? <>
+              <MenuItem onClick={() => navigate("/my-blogs")}>
                   <Typography textAlign="center">My Blogs</Typography>
                 </MenuItem>
                 <MenuItem onClick={() => navigate("/profile")}>
                   <Typography textAlign="center">Profile</Typography>
-                </MenuItem>
-                <MenuItem onClick={() => navigate("/login")}>
+                </MenuItem>           
+                <MenuItem>
+                  <Typography textAlign="center" onClick={logout} >Logout</Typography>
+                </MenuItem> 
+            </> : <MenuItem onClick={() => navigate("/login")}>
                   <Typography textAlign="center">Login</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => navigate("/register")}>
-                  <Typography textAlign="center">Register</Typography>
-                </MenuItem>
-                <MenuItem >
-                  <Typography textAlign="center" onClick={logout} >Logout</Typography>
-                </MenuItem>
-              
+            }
+                
             </Menu>
           </Box>
         </Toolbar>
