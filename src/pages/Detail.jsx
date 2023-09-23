@@ -17,6 +17,7 @@ import { useParams } from 'react-router-dom';
 import useBlogCalls from '../hooks/useBlogCalls';
 import CommentCard from '../components/blog/CommentCard';
 import CommentForm from '../components/blog/CommentForm';
+import UpdateModal from '../components/blog/UpdateModal';
 
 const Detail = () => {
     const { id } = useParams();
@@ -24,15 +25,15 @@ const Detail = () => {
   const {userId} = useSelector(state=>state.auth)
   const {getDetail,postLike} = useBlogCalls()
   const [show, setShow] = React.useState(false)
-  // blogs dizisi içinde id'ye sahip bir öğe var mı kontrol et
-  // if (!blogs || id <= 0 || id > blogs.length) {
-  //   return <div>Böyle bir blog bulunamadı.</div>;
-  // }
+  const [open, setOpen] = React.useState(false)
 
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false);
   const { author, title, category_name, comment_count, content, image, likes, publish_date, post_views,likes_n,comments } = details
   const {username} = useSelector(state=>state.auth)
   let new_date = new Date(publish_date).toLocaleString();
   const {deleteBlogData} = useBlogCalls()
+  
   React.useEffect(() => {
     getDetail(id)
   }, [])
@@ -96,7 +97,7 @@ const handleDeleteClick = () => {
         </CardActions>
         {author === username && 
         <Box marginLeft="9rem"  marginTop="0.5rem" > 
-        <Button variant="contained"  sx={{marginRight:"1rem", backgroundColor:"gray"}}>Update</Button> 
+        <Button variant="contained"  sx={{marginRight:"1rem", backgroundColor:"gray"}} onClick={() => handleOpen()} >Update</Button> 
         <Button variant="contained" color="error" marginLeft="1rem" onClick={()=>handleDeleteClick()}>Delete</Button> 
         </Box>
         }
@@ -107,7 +108,7 @@ const handleDeleteClick = () => {
       <CommentForm/>
      </>
      }
-    
+    <UpdateModal open={open} handleClose={handleClose}/>
     </Card>
   );
 }
