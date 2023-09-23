@@ -52,6 +52,31 @@ const useBlogCalls = () => {
    }
 
    /* -------------------------------------------------------------------------- */
+   /*                                 putBlogData                                */
+   /* -------------------------------------------------------------------------- */
+
+   const putBlogData = async(id,info) => {
+    dispatch(fetchStart())
+    try {
+       
+      await axios.put(`${BASE_URL}api/blogs/${id}/`,info,
+      {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+      )
+         getBlogData("blogs")
+         toastSuccessNotify("Putting was successful!");
+         navigate(-1)
+    } catch (error) {
+        dispatch(fetchFail())
+        toastErrorNotify("putting was failed!")
+    }
+ }
+
+
+   /* -------------------------------------------------------------------------- */
    /*                               deleteBlogData                               */
    /* -------------------------------------------------------------------------- */
 
@@ -170,7 +195,7 @@ const useBlogCalls = () => {
      }
 
   return {
-    getBlogData,postBlogData,getCategory,postLike,getDetail,getUser,postComment,deleteBlogData
+    getBlogData,postBlogData,getCategory,postLike,getDetail,getUser,postComment,deleteBlogData,putBlogData
   }
 }
 
