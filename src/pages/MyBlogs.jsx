@@ -3,9 +3,11 @@ import { useSelector } from 'react-redux'
 import useBlogCalls from '../hooks/useBlogCalls'
 import { Box, Button } from '@mui/material'
 import Card from "../components/blog/Card"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const MyBlogs = () => {
+  const { id } = useParams();
+  const {getDetail} = useBlogCalls()
     // const {blogs} = useSelector(state=>state.blog)
     // const {username} = useSelector(state=>state.auth)
     const navigate = useNavigate()
@@ -15,6 +17,7 @@ const MyBlogs = () => {
    useEffect(()=>{
         //  getBlogData("blogs")
          getUser(userId)
+         
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
@@ -33,6 +36,7 @@ const MyBlogs = () => {
     </Box>
     <Box textAlign="center">
         <Button variant="contained" sx={{backgroundColor:'#061e36', marginTop:"-13rem"}} onClick={()=>navigate("/newblog")}>Write Blog</Button>
+        <Button variant="outlined" sx={{color:"#061e36",marginTop:"-13rem", marginLeft:"1rem"}} onClick={()=>navigate(-1)}>Back</Button>
     </Box>
     </>
   )
