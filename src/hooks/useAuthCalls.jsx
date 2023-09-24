@@ -18,7 +18,7 @@ const useAuthCalls = () => {
         dispatch(fetchStart());
         try {
             const {data} = await axios.post(`${BASE_URL}users/register/`,userInfo)
-            dispatch(registerSuccess(data));
+            dispatch(registerSuccess(data))
             toastSuccessNotify("Register successful")
             navigate("/")
         } catch (error) {

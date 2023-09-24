@@ -27,11 +27,16 @@ const authSlice = createSlice({
           state.loading = false;
           state.currentUser = null ;
           state.token = null;
+          state.userId = null;
+          state.username = null;
+
          },
         registerSuccess:(state,{payload}) =>{
           state.loading = false;
           state.currentUser= payload?.username;
           state.token = payload?.token;
+          state.userId = payload?.id;
+          state.username = payload?.username;
         },
         fetchFail: state =>{
             state.loading = false;
