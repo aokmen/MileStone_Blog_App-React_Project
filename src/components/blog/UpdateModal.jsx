@@ -6,25 +6,27 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 
-export default function UpdateModal({open,handleClose}) {
+export default function UpdateModal({open,handleClose,info,setInfo}) {
 //   const [open, setOpen] = React.useState(false);
 //   const handleOpen = () => setOpen(true);
     const {id} = useParams() 
-    const {categories,details} = useSelector(state=>state.blog)
+    const {categories} = useSelector(state=>state.blog)
     const {getDetail,getCategory,putBlogData,getBlogData} = useBlogCalls()
-    const [info, setInfo] = React.useState({
-    title: details.title,
-    content: details.content,
-    image: details.image,
-    category: details.category,
-    status: details.status,
-    });
+   
     React.useEffect(() => {
         // getDetail(id)
-        console.log("updateModal:",details);
+        
         getCategory("categories")
     }, [])
-    
+     
+    // const [info, setInfo] = React.useState({
+    //     title: details.title,
+    //     content: details.content,
+    //     image: details.image,
+    //     category: details.category,
+    //     status: details.status,
+    //     });
+
     const handleChange = (e) => {
         setInfo({...info,[e.target.name]:e.target.value})
     }
@@ -32,7 +34,7 @@ export default function UpdateModal({open,handleClose}) {
          e.preventDefault();
          putBlogData(id, info); //! update işleminde info dolu geldiği için içerisinde id bilgiside yer alıyor. Biz bu id üzerinden sorgulama yaparak id varsa yapacağın işlem put işlemi id yoksa yapacağın işlem post işlemi diye belirtmiş olduk.
         //   getBlogData(id)
-         getDetail(id)
+        //  getDetail(id)
     }
 
   return (
