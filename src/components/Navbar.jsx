@@ -7,9 +7,7 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -20,7 +18,6 @@ import { useSelector } from 'react-redux';
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
  const {currentUser} = useSelector(state=>state.auth)
 
   const navigate = useNavigate()
@@ -28,17 +25,12 @@ function Navbar() {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
+ 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+
   const darkTheme = createTheme({
     palette: {
       
@@ -105,7 +97,7 @@ function Navbar() {
             >
               
                 <MenuItem  onClick={() => navigate("/")}>
-                  <Typography textAlign="center">Dashboard</Typography>
+                  <Typography textAlign="center">Home</Typography>
                 </MenuItem>
                 <MenuItem  onClick={() => navigate("/newblog")}> 
                   <Typography textAlign="center">New Blog</Typography>
@@ -113,6 +105,17 @@ function Navbar() {
                 <MenuItem  onClick={() => navigate("/about")}>
                   <Typography textAlign="center">About</Typography>
                 </MenuItem>
+                {currentUser ? <>
+                <MenuItem  onClick={() => navigate("/my-blogs")}>
+                  <Typography textAlign="center">My Blogs</Typography>
+                </MenuItem>
+               
+                <MenuItem  onClick={logout}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem> </> :
+                 <MenuItem  onClick={() => navigate("/login")}>
+                 <Typography textAlign="center">Login</Typography>
+               </MenuItem>}
               
             </Menu>
           </Box>
@@ -133,62 +136,47 @@ function Navbar() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            MY MILESTONE
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
            
-              <Button onClick={() => navigate("/")}
+              <Button className='button' onClick={() => navigate("/")}
                 sx={{ my: 2, color: 'white', display: 'block' }}>
-                Dashboard
+                Home
               </Button>
-              <Button onClick={() => navigate("/newblog")}
+              <Button className='button' onClick={() => navigate("/newblog")}
                 sx={{ my: 2, color: 'white', display: 'block' }}>
                 New Blog
               </Button>
-              <Button onClick={() => navigate("/about")}
+              <Button className='button' onClick={() => navigate("/about")}
                 sx={{ my: 2, color: 'white', display: 'block' }}>
                 About
               </Button>
             
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            > {currentUser ? <>
-              <MenuItem onClick={() => navigate("/my-blogs")}>
-                  <Typography textAlign="center">My Blogs</Typography>
-                </MenuItem>
-                <MenuItem onClick={() => navigate("/profile")}>
-                  <Typography textAlign="center">Profile</Typography>
-                </MenuItem>           
-                <MenuItem>
-                  <Typography textAlign="center" onClick={logout} >Logout</Typography>
-                </MenuItem> 
-            </> : <MenuItem onClick={() => navigate("/login")}>
-                  <Typography textAlign="center">Login</Typography>
-                </MenuItem>
-            }
+          <Box sx={{ flexGrow: 0,display: { xs: 'none', md: 'flex' } }}>
+           
+           
+           {currentUser ? <>
+
+            <Button className='button' onClick={() => navigate("/my-blogs")}
+                sx={{ my: 2, color: 'white', display: 'block',marginRight:"1rem" }}>
+                My Blogs
+              </Button>
+              <Button className='button' onClick={logout}
+                sx={{ my: 2, color: 'white', display: 'block'}}>
+                Logout
+              </Button>
+              </>   : <Button onClick={() => navigate("/login")}
+                sx={{ my: 2, color: 'white', display: 'block'}}>
+                Login
+              </Button>
+              }
+
+             
                 
-            </Menu>
+          
           </Box>
         </Toolbar>
       </Container>
