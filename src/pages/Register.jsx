@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Formik } from 'formik';
 import RegisterForm, { RegisterSchema } from '../components/auth/RegisterForm';
 import { Avatar, Box, Container, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import useAuthCalls from '../hooks/useAuthCalls';
+import { useSelector } from 'react-redux';
+import useBlogCalls from '../hooks/useBlogCalls';
 
 const Register = () => {
+ 
   const {register} = useAuthCalls()
+
   return (
     <Container maxWidth="lg" sx={{marginTop:"8rem", border:"1px solid gray", width:"500px", padding:"2rem", borderRadius:"2rem", boxShadow:"0 0 20px #061e36"}}>
      

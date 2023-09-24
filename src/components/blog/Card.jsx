@@ -20,15 +20,18 @@ import { useSelector } from 'react-redux';
 
 
 export default function RecipeReviewCard({author,title,id,likes,category_name,comment_count,content,image, publish_date, post_views,likes_n}) {
-  const {userId} = useSelector(state=>state.auth)
-  const {getDetail,postLike} = useBlogCalls()
+  const {userId,currentUser} = useSelector(state=>state.auth)
+  const {postLike} = useBlogCalls()
    const navigate = useNavigate()
+   const {getDetail} = useBlogCalls()
+const handleFavorite = () => { 
+  userId ? postLike(id) : navigate("/login")
 
- 
-const handleFavorite = () => { postLike(id);}
+}
 const handleDetailClick = () => {
- 
-   navigate(`/detail/${id}/`)
+  currentUser ? getDetail(id).then(() => {
+    navigate(`/detail/${id}/`) 
+   }) : navigate("/login")
 } 
 
 
@@ -71,8 +74,11 @@ const handleDetailClick = () => {
      <Box sx={{display:"flex", justifyContent:"space-between"}}>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites" onClick={handleFavorite}>
-          {likes_n.some((item) => item.user_id === userId) ? (
-            <FavoriteIcon color="error" /> ) : (<FavoriteIcon />)}
+          { 
+           likes_n?.some((item) => item.user_id === userId) ? (
+            <FavoriteIcon color="error" /> ) : (<FavoriteIcon />)
+            
+          }
           {likes}
         </IconButton>
         <IconButton aria-label="share">

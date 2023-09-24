@@ -6,11 +6,13 @@ import Typography from "@mui/material/Typography";
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import { useSelector } from "react-redux";
 import useBlogCalls from "../hooks/useBlogCalls";
+import { useNavigate } from "react-router-dom";
 
 
 export default function NewBlog() {
 
   const {blogs,categories} = useSelector(state=>state.blog)
+  const navigate = useNavigate()
   const [info, setInfo] = React.useState({
     title: "",
     content: "",
@@ -31,12 +33,18 @@ export default function NewBlog() {
     const handleChange = (e) => {
       
       setInfo({...info,[e.target.name]:e.target.value});
-      console.log(info);
+  
     };
     const handleSubmit = (e) => {
       e.preventDefault();
-      postBlogData("blogs", info);
-     console.log(info);
+      postBlogData("blogs", info)
+             setInfo({
+              title: "",
+              content: "",
+              image: "",
+              category: "",
+              status: "p",
+             })
     }
   return (
     
@@ -61,41 +69,7 @@ export default function NewBlog() {
               onChange={handleChange}
               required
             />
-        {/* <TextField className="blogInput"
-              id="category"
-              name="category"
-              label="category"
-              type="number"
-              value={info.category}
-              onChange={handleChange}
-              required
-            />
-        <TextField className="blogInput"
-              id="status"
-              name="status"
-              label="status"
-              type="text"
-              value={info.status}
-              onChange={handleChange}
-              required
-            /> */}
-               
-        {/* <FormControl className="blogInput" sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-label">Category</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="category"
-          value= {info.category}
-          label="Category"
-          onChange={handleChange}
-        >
-          {categories.map(item=>(
-            <MenuItem key={item.id}>{item.name
-            }</MenuItem>
-          ))}
-         </Select>
-     
-      </FormControl> */}
+  
          <TextField
          className="blogInput"
           id="outlined-select-currency"
@@ -141,7 +115,7 @@ export default function NewBlog() {
               onChange={handleChange}
               required
             />
-        <Box display="flex" justifyContent="center" margin="0.5rem"><Button variant="contained" type="submit">New Blog</Button></Box>
+        <Box display="flex" justifyContent="center" margin="0.5rem"><Button variant="contained" type="submit">New Blog</Button><Button variant="outlined" sx={{backgroundColor:"#061e36",marginLeft:"0.7rem"}} onClick={()=>navigate(-1)}>Back</Button></Box>
         
        
 

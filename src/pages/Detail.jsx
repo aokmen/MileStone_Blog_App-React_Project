@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import ChatIcon from '@mui/icons-material/Chat';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { Box, Button } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useBlogCalls from '../hooks/useBlogCalls';
 import CommentCard from '../components/blog/CommentCard';
 import CommentForm from '../components/blog/CommentForm';
@@ -24,6 +24,7 @@ const Detail = () => {
   const { details} = useSelector((state) => state.blog);
   const {userId} = useSelector(state=>state.auth)
   const {getDetail,postLike} = useBlogCalls()
+  const navigate = useNavigate()
   const [show, setShow] = React.useState(false)
   const [open, setOpen] = React.useState(false)
 
@@ -33,11 +34,18 @@ const Detail = () => {
   const {username} = useSelector(state=>state.auth)
   let new_date = new Date(publish_date).toLocaleString();
   const {deleteBlogData} = useBlogCalls()
-  
+
   React.useEffect(() => {
     getDetail(id)
   }, [])
 
+  const [info, setInfo] = React.useState({
+    title: details.title,
+    content: details.content,
+    image: details.image,
+    category: details.category,
+    status: details.status,
+    });
 
  const handleFavorite = () => { postLike(id,true)
 //   .then(() => {
@@ -50,7 +58,7 @@ const handleDeleteClick = () => {
 }
 
   return (
-    <Card sx={{ maxWidth: 545, minWidth: 200, boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)", borderRadius: "20px", padding: "0.3rem", margin: "10rem auto", }}>
+    <Card sx={{ maxWidth: 470, minWidth: 470, boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)", borderRadius: "20px", padding: "0.3rem", margin: "9rem auto", }}>
       <CardMedia
         component="img"
         height="300px"
@@ -94,11 +102,12 @@ const handleDeleteClick = () => {
             <VisibilityIcon />
             {post_views}
           </IconButton>
+          <Button variant="contained" sx={{backgroundColor:"#061e36",marginLeft:"0.7rem"}} onClick={()=>navigate(-1)}>Back</Button> 
         </CardActions>
         {author === username && 
-        <Box marginLeft="9rem"  marginTop="0.5rem" > 
-        <Button variant="contained"  sx={{marginRight:"1rem", backgroundColor:"gray"}} onClick={() => handleOpen()} >Update</Button> 
-        <Button variant="contained" color="error" marginLeft="1rem" onClick={()=>handleDeleteClick()}>Delete</Button> 
+        <Box marginTop="0.7rem" > 
+        <Button variant="contained"  sx={{backgroundColor:"gray"}} onClick={() => handleOpen()} >Update</Button> 
+        <Button variant="contained" color="error" sx={{marginLeft:"0.5rem"}} onClick={()=>handleDeleteClick()}>Delete</Button> 
         </Box>
         }
       </Box>
@@ -108,7 +117,7 @@ const handleDeleteClick = () => {
       <CommentForm/>
      </>
      }
-    <UpdateModal open={open} handleClose={handleClose}/>
+    <UpdateModal open={open} handleClose={handleClose} setInfo={setInfo} info={info}/>
     </Card>
   );
 }

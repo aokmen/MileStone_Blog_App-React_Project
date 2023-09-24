@@ -33,3 +33,24 @@
     box-shadow: 0 0 30px white;
     cursor: pointer;
 }
+.button {
+
+    border:none;
+    background:#333;
+    color: grey;
+  }
+  
+  .button:hover {
+ 
+    border:none;
+    color: darkcyan !important;
+    text-decoration:none;
+
+
+
+
+  }
+  
+  .button:focus {
+    background:gray;
+  }
