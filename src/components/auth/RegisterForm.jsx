@@ -13,7 +13,7 @@ export const RegisterSchema = object({
       .max(20, "Last name must be less than 30 characters!"),
     email: string().email().required("Email is a required field"),
     Image: string().url(),
-    Bio: string().url(),
+    Bio: string(),
     password: string()
       .required("Password is required!")
       .min(8, "Password must be at least 8 characters!")

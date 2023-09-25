@@ -26,10 +26,10 @@ export default function About() {
        
         
         <Box display="flex" justifyContent="center" flexDirection="column" backgroundColor="#1976D2" width="20rem" alignItems="center" gap="15px" borderRadius="30px" >
-        <a  href="http://www.github.com" ><img className="icon-btn" src={github} alt="github"/></a>
-        <a  href="http://www.facebook.com" > <img className="icon-btn" src={facebook} alt="facebook"/></a>
-        <a  href="http://www.linkedin.com" ><img className="icon-btn" src={linkedin} alt="linkedin"/></a>
-        <a  href="http://www.youtube.com" ><img className="icon-btn" src={youtube} alt="youtube"/></a>
+        <a  href="http://www.github.com" target='true'><img className="icon-btn" src={github} alt="github"/></a>
+        <a  href="http://www.facebook.com" target='true'><img className="icon-btn" src={facebook} alt="facebook"/></a>
+        <a  href="http://www.linkedin.com" target='true'><img className="icon-btn" src={linkedin} alt="linkedin"/></a>
+        <a  href="http://www.youtube.com" target='true'><img className="icon-btn" src={youtube} alt="youtube"/></a>
         </Box>
         
        
