@@ -1,6 +1,6 @@
 import * as React from "react";
 import facebook from "../assets/facebook.svg"
-import instagram from "../assets/instagram.svg"
+import github from "../assets/github.svg"
 import linkedin from "../assets/linkedin.svg"
 import youtube from "../assets/youtube.svg"
 import Typography from "@mui/material/Typography";
@@ -26,10 +26,10 @@ export default function About() {
        
         
         <Box display="flex" justifyContent="center" flexDirection="column" backgroundColor="#1976D2" width="20rem" alignItems="center" gap="15px" borderRadius="30px" >
-        <img className="icon-btn" src={facebook} alt="facebook"/>
-        <img className="icon-btn" src={instagram} alt="facebook"/>
-        <img className="icon-btn" src={linkedin} alt="facebook"/>
-        <img className="icon-btn" src={youtube} alt="facebook"/>
+        <a  href="http://www.github.com" ><img className="icon-btn" src={github} alt="github"/></a>
+        <a  href="http://www.facebook.com" > <img className="icon-btn" src={facebook} alt="facebook"/></a>
+        <a  href="http://www.linkedin.com" ><img className="icon-btn" src={linkedin} alt="linkedin"/></a>
+        <a  href="http://www.youtube.com" ><img className="icon-btn" src={youtube} alt="youtube"/></a>
         </Box>
         
        
