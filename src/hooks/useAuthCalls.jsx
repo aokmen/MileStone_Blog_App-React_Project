@@ -1,10 +1,10 @@
 import { fetchFail,fetchStart,registerSuccess,loginSuccess, logoutSuccess } from "../features/authSlice";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 import {useDispatch, useSelector} from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 const useAuthCalls = () => {
-    const {state} = useLocation()
+    // const {state} = useLocation()
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const {token} = useSelector(state=>state.auth);

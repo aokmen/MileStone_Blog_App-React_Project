@@ -11,7 +11,6 @@ const Dashboard = () => {
 
     useEffect(()=>{
          getBlogData("blogs")
-        console.log("blogs",blogs);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
   

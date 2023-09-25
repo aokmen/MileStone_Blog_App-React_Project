@@ -40,8 +40,6 @@ function Navbar() {
     },
   });
 
-  console.log("navbar",currentUser);
-
   return (
     <ThemeProvider theme={darkTheme}>
     <AppBar position="fixed" >

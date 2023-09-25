@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Formik } from 'formik';
 import RegisterForm, { RegisterSchema } from '../components/auth/RegisterForm';
 import { Avatar, Box, Container, Grid, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import useAuthCalls from '../hooks/useAuthCalls';
-import { useSelector } from 'react-redux';
-import useBlogCalls from '../hooks/useBlogCalls';
+
 
 const Register = () => {
  

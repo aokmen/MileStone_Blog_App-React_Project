@@ -1,6 +1,6 @@
-import React from 'react'
+
 import {useDispatch, useSelector} from 'react-redux'
-import { fetchFail, fetchStart, getCategorySuccess, getSuccess,getDetailSuccess, getCommentSuccess, getUserSuccess } from '../features/blogSlice';
+import { fetchFail, fetchStart, getCategorySuccess, getSuccess,getDetailSuccess,getUserSuccess } from '../features/blogSlice';
 import axios from "axios"
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ const useBlogCalls = () => {
      const navigate = useNavigate()
      const BASE_URL = process.env.REACT_APP_BASE_URL;
      const {token} = useSelector(state=>state.auth)
-     const {userId} = useSelector(state=>state.auth)
+    //  const {userId} = useSelector(state=>state.auth)
      /* -------------------------------------------------------------------------- */
      /*                                 getBlogData                                */
      /* -------------------------------------------------------------------------- */
@@ -107,7 +107,7 @@ const useBlogCalls = () => {
    const getCategory = async(url) => {
     const { data } = await axios(`${BASE_URL}api/${url}/`)
      dispatch(getCategorySuccess({data,url}))
-    console.log(data);
+ 
  }
 
   

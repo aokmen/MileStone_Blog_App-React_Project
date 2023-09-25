@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function NewBlog() {
 
-  const {blogs,categories} = useSelector(state=>state.blog)
+  const {categories} = useSelector(state=>state.blog)
   const navigate = useNavigate()
   const [info, setInfo] = React.useState({
     title: "",
@@ -26,7 +26,6 @@ export default function NewBlog() {
     React.useEffect(()=>{
          getBlogData("blogs")
          getCategory("categories")
-        console.log("blogs",blogs);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 

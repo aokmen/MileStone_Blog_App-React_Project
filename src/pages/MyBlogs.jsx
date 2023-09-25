@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux'
 import useBlogCalls from '../hooks/useBlogCalls'
 import { Box, Button } from '@mui/material'
 import Card from "../components/blog/Card"
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const MyBlogs = () => {
-  const { id } = useParams();
-  const {getDetail} = useBlogCalls()
+  // const { id } = useParams();
+  // const {getDetail} = useBlogCalls()
     // const {blogs} = useSelector(state=>state.blog)
     // const {username} = useSelector(state=>state.auth)
     const navigate = useNavigate()
