@@ -1,5 +1,8 @@
+# MileStone Blog App
+<h3>Visit: https://milestone-blog-react-app.vercel.app/ </h3>
 
-## Project Name: Milestone Application Project
+<img alt="alt_text" src="./blog.png"/>
+
 ## Project Description
 
 The Milestone Application Project is a web application that allows users to create, view, and interact with blogs. Users can create and manage their own blogs, read and comment on other users' blogs, and explore blogs by category. Below is more information about the project.
