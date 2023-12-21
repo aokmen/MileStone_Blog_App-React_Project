@@ -7,6 +7,15 @@
 
 The Milestone Application Project is a web application that allows users to create, view, and interact with blogs. Users can create and manage their own blogs, read and comment on other users' blogs, and explore blogs by category. Below is more information about the project.
 
+## Technologies and Libraries Used
+- React: Used for creating user interfaces and components.
+- Material-UI: Used to style the application and design a user-friendly interface.
+- Redux Toolkit: Used for state management and sharing.
+- Axios: Used for making HTTP requests and data exchange with the server.
+- React-Router: Used for page routing and navigation.
+- Redux-Persist: Stores application data on local storage.
+- Formik and Yup: Used for form management and validation.
+  
 ## Project Components and Functionalities
 
 ### Home Page (Dashboard)
@@ -35,12 +44,5 @@ The Milestone Application Project is a web application that allows users to crea
 - Admin users can create and edit blog categories.
 - Categories are used for organizing and filtering blogs.
 
-## Technologies and Libraries Used
-- React: Used for creating user interfaces and components.
-- Material-UI: Used to style the application and design a user-friendly interface.
-- Redux Toolkit: Used for state management and sharing.
-- Axios: Used for making HTTP requests and data exchange with the server.
-- React-Router: Used for page routing and navigation.
-- Redux-Persist: Stores application data on local storage.
-- Formik and Yup: Used for form management and validation.
+
 
